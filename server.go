@@ -22,10 +22,10 @@ type Server struct {
 	InputRegisters   []uint16
 }
 
-// Request contains the connection and Modbus frame.
+// Request contains the connection and Modbus Frame.
 type Request struct {
-	conn  io.ReadWriteCloser
-	frame Framer
+	Conn  io.ReadWriteCloser
+	Frame Framer
 }
 
 // NewServer creates a new Modbus server (slave).
@@ -63,11 +63,11 @@ func (s *Server) Handle(request *Request) Framer {
 	var exception *Exception
 	var data []byte
 
-	response := request.frame.Copy()
+	response := request.Frame.Copy()
 
-	function := request.frame.GetFunction()
+	function := request.Frame.GetFunction()
 	if s.function[function] != nil {
-		data, exception = s.function[function](s, request.frame)
+		data, exception = s.function[function](s, request.Frame)
 		response.SetData(data)
 	} else {
 		exception = &IllegalFunction
@@ -85,7 +85,7 @@ func (s *Server) Handler() {
 	for {
 		request := <-s.RequestChan
 		response := s.Handle(request)
-		request.conn.Write(response.Bytes())
+		request.Conn.Write(response.Bytes())
 	}
 }
 

@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-// RTUFrame is the Modbus TCP frame.
+// RTUFrame is the Modbus TCP Frame.
 type RTUFrame struct {
 	Address  uint8
 	Function uint8
@@ -13,7 +13,7 @@ type RTUFrame struct {
 	CRC      uint16
 }
 
-// NewRTUFrame converts a packet to a Modbus TCP frame.
+// NewRTUFrame converts a packet to a Modbus TCP Frame.
 func NewRTUFrame(packet []byte) (*RTUFrame, error) {
 	// Check the that the packet length.
 	if len(packet) < 5 {
@@ -72,13 +72,13 @@ func (frame *RTUFrame) GetData() []byte {
 	return frame.Data
 }
 
-// SetData sets the RTUFrame Data byte field and updates the frame length
+// SetData sets the RTUFrame Data byte field and updates the Frame length
 // accordingly.
 func (frame *RTUFrame) SetData(data []byte) {
 	frame.Data = data
 }
 
-// SetException sets the Modbus exception code in the frame.
+// SetException sets the Modbus exception code in the Frame.
 func (frame *RTUFrame) SetException(exception *Exception) {
 	frame.Function = frame.Function | 0x80
 	frame.Data = []byte{byte(*exception)}

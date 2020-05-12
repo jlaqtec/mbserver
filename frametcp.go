@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-// TCPFrame is the Modbus TCP frame.
+// TCPFrame is the Modbus TCP Frame.
 type TCPFrame struct {
 	TransactionIdentifier uint16
 	ProtocolIdentifier    uint16
@@ -15,7 +15,7 @@ type TCPFrame struct {
 	Data                  []byte
 }
 
-// NewTCPFrame converts a packet to a Modbus TCP frame.
+// NewTCPFrame converts a packet to a Modbus TCP Frame.
 func NewTCPFrame(packet []byte) (*TCPFrame, error) {
 	// Check if the packet is too short.
 	if len(packet) < 9 {
@@ -69,14 +69,14 @@ func (frame *TCPFrame) GetData() []byte {
 	return frame.Data
 }
 
-// SetData sets the TCPFrame Data byte field and updates the frame length
+// SetData sets the TCPFrame Data byte field and updates the Frame length
 // accordingly.
 func (frame *TCPFrame) SetData(data []byte) {
 	frame.Data = data
 	frame.setLength()
 }
 
-// SetException sets the Modbus exception code in the frame.
+// SetException sets the Modbus exception code in the Frame.
 func (frame *TCPFrame) SetException(exception *Exception) {
 	frame.Function = frame.Function | 0x80
 	frame.Data = []byte{byte(*exception)}

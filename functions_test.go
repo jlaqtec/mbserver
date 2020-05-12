@@ -32,7 +32,7 @@ func TestReadCoils(t *testing.T) {
 	SetDataWithRegisterAndNumber(&frame, 10, 9)
 
 	var req Request
-	req.frame = &frame
+	req.Frame = &frame
 	response := s.handle(&req)
 
 	exception := GetException(response)
@@ -66,7 +66,7 @@ func TestReadDiscreteInputs(t *testing.T) {
 	SetDataWithRegisterAndNumber(&frame, 0, 10)
 
 	var req Request
-	req.frame = &frame
+	req.Frame = &frame
 	response := s.handle(&req)
 
 	exception := GetException(response)
@@ -97,7 +97,7 @@ func TestReadHoldingRegisters(t *testing.T) {
 	SetDataWithRegisterAndNumber(&frame, 100, 3)
 
 	var req Request
-	req.frame = &frame
+	req.Frame = &frame
 	response := s.handle(&req)
 	exception := GetException(response)
 	if exception != Success {
@@ -127,7 +127,7 @@ func TestReadInputRegisters(t *testing.T) {
 	SetDataWithRegisterAndNumber(&frame, 200, 3)
 
 	var req Request
-	req.frame = &frame
+	req.Frame = &frame
 	response := s.handle(&req)
 	exception := GetException(response)
 	if exception != Success {
@@ -154,7 +154,7 @@ func TestWriteSingleCoil(t *testing.T) {
 	SetDataWithRegisterAndNumber(&frame, 65535, 1024)
 
 	var req Request
-	req.frame = &frame
+	req.Frame = &frame
 	response := s.handle(&req)
 	exception := GetException(response)
 	if exception != Success {
@@ -181,7 +181,7 @@ func TestWriteHoldingRegister(t *testing.T) {
 	SetDataWithRegisterAndNumber(&frame, 5, 6)
 
 	var req Request
-	req.frame = &frame
+	req.Frame = &frame
 	response := s.handle(&req)
 	exception := GetException(response)
 	if exception != Success {
@@ -208,7 +208,7 @@ func TestWriteMultipleCoils(t *testing.T) {
 	SetDataWithRegisterAndNumberAndBytes(&frame, 1, 2, []byte{3})
 
 	var req Request
-	req.frame = &frame
+	req.Frame = &frame
 	response := s.handle(&req)
 	exception := GetException(response)
 	if exception != Success {
@@ -235,7 +235,7 @@ func TestWriteHoldingRegisters(t *testing.T) {
 	SetDataWithRegisterAndNumberAndValues(&frame, 1, 2, []uint16{3, 4})
 
 	var req Request
-	req.frame = &frame
+	req.Frame = &frame
 	response := s.handle(&req)
 	exception := GetException(response)
 	if exception != Success {
@@ -277,7 +277,7 @@ func TestOutOfBounds(t *testing.T) {
 	frame.Device = 255
 
 	var req Request
-	req.frame = &frame
+	req.Frame = &frame
 
 	// bits
 	SetDataWithRegisterAndNumber(&frame, 65535, 2)

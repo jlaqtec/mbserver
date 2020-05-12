@@ -35,7 +35,7 @@ func TestUnsupportedFunction(t *testing.T) {
 	frame.Function = 255
 
 	var req Request
-	req.frame = &frame
+	req.Frame = &frame
 	response := s.Handle(&req)
 	exception := GetException(response)
 	if exception != IllegalFunction {
