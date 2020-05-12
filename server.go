@@ -14,7 +14,7 @@ type Server struct {
 	Debug            bool
 	listeners        []net.Listener
 	ports            []serial.Port
-	requestChan      chan *Request
+	RequestChan      chan *Request
 	function         [256](func(*Server, Framer) ([]byte, *Exception))
 	DiscreteInputs   []byte
 	Coils            []byte
@@ -48,7 +48,7 @@ func NewServer() *Server {
 	s.function[15] = WriteMultipleCoils
 	s.function[16] = WriteHoldingRegisters
 
-	s.requestChan = make(chan *Request)
+	s.RequestChan = make(chan *Request)
 	go s.handler()
 
 	return s
@@ -83,7 +83,7 @@ func (s *Server) handle(request *Request) Framer {
 // All requests are handled synchronously to prevent modbus memory corruption.
 func (s *Server) handler() {
 	for {
-		request := <-s.requestChan
+		request := <-s.RequestChan
 		response := s.handle(request)
 		request.conn.Write(response.Bytes())
 	}

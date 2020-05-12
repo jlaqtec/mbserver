@@ -44,7 +44,7 @@ func (s *Server) acceptSerialRequests(port serial.Port) {
 
 			request := &Request{port, frame}
 
-			s.requestChan <- request
+			s.RequestChan <- request
 		}
 	}
 }

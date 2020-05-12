@@ -41,7 +41,7 @@ func (s *Server) accept(listen net.Listener) error {
 
 				request := &Request{conn, frame}
 
-				s.requestChan <- request
+				s.RequestChan <- request
 			}
 		}(conn)
 	}
