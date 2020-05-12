@@ -48,8 +48,8 @@ func NewServer() *Server {
 	s.function[15] = WriteMultipleCoils
 	s.function[16] = WriteHoldingRegisters
 
-	s.RequestChan = make(chan *Request)
-	go s.handler()
+	//s.RequestChan = make(chan *Request)
+	//go s.handler()
 
 	return s
 }
@@ -59,7 +59,7 @@ func (s *Server) RegisterFunctionHandler(funcCode uint8, function func(*Server, 
 	s.function[funcCode] = function
 }
 
-func (s *Server) handle(request *Request) Framer {
+func (s *Server) Handle(request *Request) Framer {
 	var exception *Exception
 	var data []byte
 
@@ -81,10 +81,10 @@ func (s *Server) handle(request *Request) Framer {
 }
 
 // All requests are handled synchronously to prevent modbus memory corruption.
-func (s *Server) handler() {
+func (s *Server) Handler() {
 	for {
 		request := <-s.RequestChan
-		response := s.handle(request)
+		response := s.Handle(request)
 		request.conn.Write(response.Bytes())
 	}
 }

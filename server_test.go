@@ -36,7 +36,7 @@ func TestUnsupportedFunction(t *testing.T) {
 
 	var req Request
 	req.frame = &frame
-	response := s.handle(&req)
+	response := s.Handle(&req)
 	exception := GetException(response)
 	if exception != IllegalFunction {
 		t.Errorf("expected IllegalFunction (%d), got (%v)", IllegalFunction, exception)
